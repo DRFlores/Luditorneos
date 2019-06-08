@@ -2,7 +2,7 @@ package ar.edu.unlam.tallerweb1.modelo;
 
 import java.sql.Date;
 import java.sql.Time;
-
+import java.text.SimpleDateFormat;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,14 +21,19 @@ public class Torneo {
 	private Long id;
 	private Time horario;
 	private Date dia;
-	@Enumerated(EnumType.ORDINAL)
+	
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Juego juego;
+	
 	@Enumerated(EnumType.ORDINAL)
 	private Modalidad modalidad;
+	
 	@Column(length = 300)
 	private String premios;
+	
 	@Column(length = 300)
 	private String descripcion;
+	
 	@Enumerated(EnumType.ORDINAL)
 	private Estado estado;
 	
@@ -57,9 +62,9 @@ public class Torneo {
 	public Usuario getOrganizador() {
 		return this.organizador;
 	}
-
+	
 	public Time getHorario() {
-		return horario;
+		return this.horario;
 	}
 
 	public void setHorario(Time horario) {
@@ -106,6 +111,14 @@ public class Torneo {
 
 	public void setEstado(Estado estado) {
 		this.estado = estado;
+	}
+	
+	public String getHorarioHHss() {
+		return new SimpleDateFormat("HH:mm").format(this.horario);		
+	}
+	
+	public String getFechaDDMMAAAA() {
+		return new SimpleDateFormat("dd/MM/yyyy").format(this.dia);		
 	}
 	
 

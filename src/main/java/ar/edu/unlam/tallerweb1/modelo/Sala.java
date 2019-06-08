@@ -1,7 +1,6 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,13 +12,14 @@ import javax.persistence.Enumerated;
 
 
 @Entity
-public class Salas {
+public class Sala {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String sala;
-	@Enumerated(EnumType.ORDINAL)
+	private String linkDeLaSala;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Juego juego;	
 	
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -29,16 +29,16 @@ public class Salas {
 		this.organizador = organizador;
 	}
 
-	public String getSala() {
-		return sala;
+	public String getLinkDeLaSala() {
+		return this.linkDeLaSala;
 	}
 
-	public void setSala(String sala) {
-		this.sala = sala;
+	public void setLinkDeLaSala(String linkDeLaSala) {
+		this.linkDeLaSala = linkDeLaSala;
 	}
 
 	public Juego getJuego() {
-		return juego;
+		return this.juego;
 	}
 
 	public void setJuego(Juego juego) {

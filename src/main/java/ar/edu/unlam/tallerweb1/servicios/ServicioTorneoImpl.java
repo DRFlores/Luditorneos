@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.dao.TorneoDao;
+import ar.edu.unlam.tallerweb1.modelo.Sala;
 import ar.edu.unlam.tallerweb1.modelo.Torneo;
-import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 @Service("servicioTorneo")
 @Transactional
@@ -19,6 +19,12 @@ public class ServicioTorneoImpl implements ServicioTorneo {
 	@Override
 	public Torneo consultarTorneoPorId (Long id) {
 		return servicioTorneoDao.consultarTorneoPorId(id);
+	}
+	
+	@Override
+	public Sala consultarSala(Torneo torneo) {
+		return servicioTorneoDao.consultarSala(torneo);
+		
 	}
 
 }
