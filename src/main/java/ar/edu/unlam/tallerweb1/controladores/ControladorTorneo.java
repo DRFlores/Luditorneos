@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
@@ -18,35 +20,44 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioTorneo;
 public class ControladorTorneo {
 	@Inject
 	private ServicioTorneo servicioTorneo;
-	/*
-	@RequestMapping(path = "/torneo", method = RequestMethod.GET)
-	public ModelAndView irAHome() {
-		return new ModelAndView("torneo/publicacion");
-	}
-	*/
+	
 	@RequestMapping(path = "/torneo/{id}", method = RequestMethod.GET)
-	public ModelAndView irAHome(@PathVariable("id") String id) {
+	public ModelAndView verDetalleDeTorneo(@PathVariable("id") String id) {
 		Torneo torneoBuscado = servicioTorneo.consultarTorneoPorId(Long.parseLong(id));
 		
 		ModelMap model = new ModelMap();
 
 		if (torneoBuscado != null) {
-			Usuario organizador = torneoBuscado.getOrganizador();
+			
+			model.put("torneo", torneoBuscado);
+			
 			Sala sala = servicioTorneo.consultarSala(torneoBuscado);
 			if(sala != null) {
 				String link = sala.getLinkDeLaSala();
 				model.put("sala", link);
 			}
-			
-			model.put("organizador", organizador);
-			model.put("torneo", torneoBuscado);
-			model.put("horario",torneoBuscado.getHorarioHHss());
-			model.put("fecha", torneoBuscado.getFechaDDMMAAAA());
-		} else {
+
+		} else {			
 			model.put("error", "Torneo no encontrado!");
 		}
 		
 		return new ModelAndView("torneo/publicacion",model);
+	}
+	
+	@RequestMapping(path = {"/torneo","/torneos"}, method = RequestMethod.GET)
+	public ModelAndView verProximosTorneos() {
+		
+		List<Torneo> proximosTorneos = servicioTorneo.consultarProximosTorneos();
+		
+		ModelMap model = new ModelMap();
+
+		if (!proximosTorneos.isEmpty()) {				
+			model.put("torneos", proximosTorneos);
+		} else {
+			model.put("error", "Lo sentimos! No hay torneos disponibles...");
+		}
+		
+		return new ModelAndView("torneo/proximos-torneos",model);
 	}
 
 }

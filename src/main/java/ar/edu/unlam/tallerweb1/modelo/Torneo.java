@@ -1,7 +1,6 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,8 +18,8 @@ public class Torneo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Time horario;
-	private Date dia;
+
+	private Timestamp diaYHorario;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Juego juego;
@@ -62,22 +61,6 @@ public class Torneo {
 	public Usuario getOrganizador() {
 		return this.organizador;
 	}
-	
-	public Time getHorario() {
-		return this.horario;
-	}
-
-	public void setHorario(Time horario) {
-		this.horario = horario;
-	}
-
-	public Date getDia() {
-		return dia;
-	}
-
-	public void setDia(Date dia) {
-		this.dia = dia;
-	}
 
 	public Juego getJuego() {
 		return juego;
@@ -114,12 +97,19 @@ public class Torneo {
 	}
 	
 	public String getHorarioHHss() {
-		return new SimpleDateFormat("HH:mm").format(this.horario);		
+		return new SimpleDateFormat("HH:mm").format(this.diaYHorario);		
 	}
 	
 	public String getFechaDDMMAAAA() {
-		return new SimpleDateFormat("dd/MM/yyyy").format(this.dia);		
+		return new SimpleDateFormat("dd/MM/yyyy").format(this.diaYHorario);		
 	}
 	
+	public void setDiaYHorario(Timestamp diaYHorario) {
+		this.diaYHorario = diaYHorario;
+	}
+	
+	public Timestamp getDiaYHorario() {
+		return this.diaYHorario;
+	}
 
 }
