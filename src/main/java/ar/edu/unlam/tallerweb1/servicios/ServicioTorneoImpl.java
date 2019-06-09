@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -25,6 +27,11 @@ public class ServicioTorneoImpl implements ServicioTorneo {
 	public Sala consultarSala(Torneo torneo) {
 		return servicioTorneoDao.consultarSala(torneo);
 		
+	}
+	
+	@Override
+	public List<Torneo> consultarProximosTorneos() {
+		return servicioTorneoDao.consultarProximosTorneos();
 	}
 
 }
