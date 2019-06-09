@@ -14,12 +14,12 @@
 
 <div class="container text-center">
 <c:if test="${not empty error}">
-      <h4 class="alert alert-danger"><span>${error}</span></h4>
-       <br>
+    <h4 class="alert alert-danger"><span>${error}</span></h4>
+    <br>
 </c:if>
 
 <c:if test="${not empty torneo}">
-		<h1>	${torneo.descripcion} </h1>
+		<h1>${torneo.descripcion} </h1>
 
       <p><span>${torneo.getOrganizador().nick}  los invita al torneo de ${torneo.juego.descripcion} ${torneo.modalidad.descripcion} 
       a las ${torneo.getHorarioHHss()} hrs el día ${torneo.getFechaDDMMAAAA()}</span></p>
@@ -35,7 +35,8 @@
 
 
 		<span class="bg${torneo.estado.color}">Estado del torneo: Torneo ${torneo.estado.descripcion}</span>
-       <br>
+    <br>
+    <button type="button" class="btn btn-primary">Apuntarme!!</button>
        
 </c:if>
 
