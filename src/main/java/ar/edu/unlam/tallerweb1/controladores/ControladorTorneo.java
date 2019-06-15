@@ -31,7 +31,6 @@ public class ControladorTorneo {
 			
 			Sala sala = servicioTorneo.consultarSala(torneoBuscado);
 			if(sala != null) {
-				//String link = sala.getLinkDeLaSala();
 				model.put("sala", sala.getLinkDeLaSala());
 			}
 
