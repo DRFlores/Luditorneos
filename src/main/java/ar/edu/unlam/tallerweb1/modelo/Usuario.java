@@ -24,6 +24,11 @@ public class Usuario {
 	private String password;
 	@Enumerated(EnumType.ORDINAL)
 	private Rol rol;
+	private Long monedas;
+	
+	public Usuario(){
+		this.monedas = 0L;
+	}
 	
 	public Long getId() {
 		return this.id;
@@ -58,4 +63,22 @@ public class Usuario {
 	public void setNombre(String nick) {
 		this.nick = nick;
 	}
+	public Long getMonedas() {
+		return monedas;
+	}
+	
+	public void sumarMonedas(Long monedasASumar) {
+		this.monedas = this.monedas + monedasASumar;
+	}
+	
+	public boolean restarMonedas(Long monedasARestar) {
+		if (this.monedas >= monedasARestar) {
+			this.monedas = this.monedas - monedasARestar;
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 }

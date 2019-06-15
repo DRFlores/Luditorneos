@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
 import ar.edu.unlam.tallerweb1.modelo.Sala;
 import ar.edu.unlam.tallerweb1.modelo.Torneo;
-import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioTorneo;
 
 @Controller
@@ -33,8 +31,8 @@ public class ControladorTorneo {
 			
 			Sala sala = servicioTorneo.consultarSala(torneoBuscado);
 			if(sala != null) {
-				String link = sala.getLinkDeLaSala();
-				model.put("sala", link);
+				//String link = sala.getLinkDeLaSala();
+				model.put("sala", sala.getLinkDeLaSala());
 			}
 
 		} else {			

@@ -19,23 +19,29 @@
 </c:if>
 
 <c:if test="${not empty torneo}">
-		<h1>	${torneo.descripcion} </h1>
+	<h1>	${torneo.descripcion} </h1>
 
-      <p><span>${torneo.getOrganizador().nick}  los invita al torneo de ${torneo.juego.descripcion} ${torneo.modalidad.descripcion} 
-      a las ${torneo.getHorarioHHss()} hrs el día ${torneo.getFechaDDMMAAAA()}</span></p>
-      <p> Los premios son: </p>
-      <p>${torneo.premios}</p>
+    <p><span>${torneo.getOrganizador().nick}  los invita al torneo de ${torneo.juego.descripcion} 
+    ${torneo.modalidad.descripcion} 
+    a las ${torneo.getHorarioHHss()} hrs el día ${torneo.getFechaDDMMAAAA()}</span></p>
+    <p> Los premios son: </p>
+    <p>Primer premio: ${torneo.primerPremio} monedas</p>
+    <p>Segundo premio: ${torneo.segundoPremio} monedas</p>
+    <p>Tercer premio: ${torneo.tercerPremio} monedas</p>
       
-      <c:if test="${not empty sala}">
-      <p> El torneo se realizará en la sala: <p>
-      <a href="${sala}">${sala}</a>
-      </c:if>
+    <c:if test="${not empty sala}">
+    	<p> El torneo se realizará en la sala: <p>
+    	<a href="${sala}">${sala}</a>
+	</c:if>
       
-      <p>Los esperamos!</p>
-
-
-		<span class="bg${torneo.estado.color}">Estado del torneo: Torneo ${torneo.estado.descripcion}</span>
-       <br>
+    <p>Los esperamos!</p>
+    <br>
+    <%@ page import="ar.edu.unlam.tallerweb1.modelo.Modalidad" %>
+    <c:if test="${torneo.modalidad != Modalidad.INDIVIDUAL}">
+    <p><small>*Los premios se dividen entre los participantes ganadores</small></p>
+    <p><small>Por ejemplo: un primer premio de 50 monedas para un equipo de 2 participantes
+    es un total de 25 monedas para cada uno</small></p>
+    </c:if>
        
 </c:if>
 
