@@ -58,4 +58,5 @@ public class Usuario {
 	public void setNombre(String nick) {
 		this.nick = nick;
 	}
+	
 }

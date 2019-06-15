@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -31,7 +32,13 @@ public class ServicioTorneoImpl implements ServicioTorneo {
 	
 	@Override
 	public List<Torneo> consultarProximosTorneos() {
-		return servicioTorneoDao.consultarProximosTorneos();
+		/*
+		 * Descontamos 15 minutos a la fecha actual porque las inscripciones siguen abiertas
+		 * hasta 15 minutos después del inicio del torneo.
+		 * */
+		Calendar fechayHora = Calendar.getInstance();
+		fechayHora.add(Calendar.MINUTE, -15);		
+		return servicioTorneoDao.consultarProximosTorneos(fechayHora);
 	}
 
 }
