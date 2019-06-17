@@ -1,7 +1,7 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +19,7 @@ public class Torneo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private Timestamp diaYHorario;
+	private Calendar diaYHorario;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Juego juego;
@@ -27,25 +27,16 @@ public class Torneo {
 	@Enumerated(EnumType.ORDINAL)
 	private Modalidad modalidad;
 	
-	@Column(length = 300)
-	private String premios;
+	private Long primerPremio;
+	private Long segundoPremio;
+	private Long tercerPremio;
 	
 	@Column(length = 300)
 	private String descripcion;
 	
-	@Enumerated(EnumType.ORDINAL)
-	private Estado estado;
-	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Usuario organizador;
 	
-	public void setPremios(String premios) {
-		this.premios = premios;
-	}
-	
-	public String getPremios() {
-		return this.premios;
-	}
 	public Long getId() {
 		return id;
 	}
@@ -87,29 +78,71 @@ public class Torneo {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
-	public Estado getEstado() {
-		return estado;
-	}
-
-	public void setEstado(Estado estado) {
-		this.estado = estado;
-	}
 	
 	public String getHorarioHHss() {
-		return new SimpleDateFormat("HH:mm").format(this.diaYHorario);		
+		return new SimpleDateFormat("HH:mm").format(this.diaYHorario.getTime());		
 	}
 	
 	public String getFechaDDMMAAAA() {
-		return new SimpleDateFormat("dd/MM/yyyy").format(this.diaYHorario);		
+		return new SimpleDateFormat("dd/MM/yyyy").format(this.diaYHorario.getTime());
 	}
 	
-	public void setDiaYHorario(Timestamp diaYHorario) {
+	public void setDiaYHorario(Calendar diaYHorario) {
 		this.diaYHorario = diaYHorario;
 	}
 	
-	public Timestamp getDiaYHorario() {
+	public Calendar getDiaYHorario() {
 		return this.diaYHorario;
 	}
+
+	public Long getPrimerPremio() {
+		return primerPremio;
+	}
+
+	public boolean setPrimerPremio(Long primerPremio) {
+		if(this.modalidad == Modalidad.EN_PAREJAS && primerPremio%2!=0)
+		{
+			return false;
+		}
+		else {
+			this.primerPremio = primerPremio;
+			return true;			
+		}		
+	}
+
+	public Long getSegundoPremio() {
+		return segundoPremio;
+	}
+
+	public boolean setSegundoPremio(Long segundoPremio) {
+		if(this.modalidad == Modalidad.EN_PAREJAS && segundoPremio%2!=0)
+		{
+			return false;
+		}
+		else {
+			this.segundoPremio = segundoPremio;
+			return true;			
+		}
+	}
+
+	public Long getTercerPremio() {
+		return tercerPremio;
+	}
+
+	public boolean setTercerPremio(Long tercerPremio) {
+		if(this.modalidad == Modalidad.EN_PAREJAS && tercerPremio%2!=0)
+		{
+			return false;
+		}
+		else {
+			this.tercerPremio = tercerPremio;
+			return true;			
+		}
+	}
+	
+	public Long getPremiosTotalesARepartir() {
+		return this.getPrimerPremio()+this.getSegundoPremio()+this.getTercerPremio();		
+	}
+	
 
 }

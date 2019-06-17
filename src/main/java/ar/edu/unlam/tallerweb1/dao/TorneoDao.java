@@ -4,13 +4,12 @@ import java.util.List;
 
 import ar.edu.unlam.tallerweb1.modelo.Sala;
 import ar.edu.unlam.tallerweb1.modelo.Torneo;
+import java.util.Calendar;
 
 public interface TorneoDao {
 	
 	Torneo consultarTorneoPorId(Long id);
 	Sala consultarSala(Torneo torneo);
-	List<Torneo> consultarProximosTorneos();
-	void actualizarEstadosDeLosTorneos();
-	void actualizarEstadoDeTorneoPorId(Long id);
+	List<Torneo> consultarProximosTorneos(Calendar fechayHora);
 
 }
