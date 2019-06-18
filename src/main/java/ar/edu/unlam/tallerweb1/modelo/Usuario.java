@@ -62,6 +62,7 @@ public class Usuario {
 		this.nick = nick;
 	}
 	
+	
 	public CuentaBancaria getCuentaBancaria() {
 		return cuentaBancaria;
 	}
