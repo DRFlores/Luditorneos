@@ -2,11 +2,14 @@ package ar.edu.unlam.tallerweb1.controladores;
 
 import ar.edu.unlam.tallerweb1.modelo.Mail;
 import ar.edu.unlam.tallerweb1.modelo.Torneo;
-import ar.edu.unlam.tallerweb1.servicios.ServicioTorneo;
-import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEmail;
+import ar.edu.unlam.tallerweb1.servicios.ServicioTorneo;
+import ar.edu.unlam.tallerweb1.servicios.ServicioEmailImpl;
+
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,30 +23,39 @@ import javax.servlet.http.HttpSession;
 public class ControladorEmail {
 
     @Inject
-    private ServicioEmail servicioEmail;
+    private ServicioTorneo servicioTorneo;
 
     @Inject
-    private ServicioTorneo servicioTorneo;
+    private ServicioEmail servicioEmail;
 
     @RequestMapping(value = "/send-mail", method = RequestMethod.POST)
     public ModelAndView sendMail (@ModelAttribute("torneo") Torneo torneo, HttpServletRequest request) {
 
+        ModelMap model = new ModelMap();
+
         HttpSession session = request.getSession();
-        String userName = (String) session.getAttribute("USER");
+        Usuario userName = (Usuario) session.getAttribute("USER");
         String rol = session.getAttribute("ROL").toString();
 
         Torneo t = servicioTorneo.consultarTorneoPorId(torneo.getId());
 
         if (rol != "ORGANIZADOR") {
             Mail mail = new Mail();
-            mail.setPara(userName);
+            mail.setUsuario(userName);
+            mail.setPara(userName.getEmail());
             mail.setContenido("Te anotaste para jugar: " + t.getJuego().getDescripcion() + " el día " + t.getFechaDDMMAAAA()
                     + " a las " + t.getHorarioHHss() + "." );
             mail.setAsunto("Te anotaste exitosamente para jugar: " + t.getJuego().getDescripcion());
-            servicioEmail.sendSimpleMessage(mail);
+
+            servicioEmail.mandarMail(mail);
+            servicioEmail.guardarEmail(mail);
+
+            model.put("enviado", "El mail se mando exitosamente");
+        } else {
+            model.put("error", "El mail no se ha enviado o usted es organizador");
         }
 
-        return new ModelAndView("mail/succesful");
+        return new ModelAndView("mail/succesful", model);
     }
 
 }

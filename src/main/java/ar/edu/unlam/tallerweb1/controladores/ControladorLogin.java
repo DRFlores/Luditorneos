@@ -49,7 +49,7 @@ public class ControladorLogin {
 		if (usuarioBuscado != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("ROL", usuarioBuscado.getRol());
-			session.setAttribute("USER", usuarioBuscado.getEmail());
+			session.setAttribute("USER", usuarioBuscado);
 			return new ModelAndView("redirect:/torneo");
 		} else {
 			// si el usuario no existe agrega un mensaje de error en el modelo.
