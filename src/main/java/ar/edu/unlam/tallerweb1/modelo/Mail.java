@@ -1,42 +1,73 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="Mail")
 public class Mail {
 
-    private String from;
-    private String to;
-    private String subject;
-    private String content;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public String getFrom() {
-        return from;
+    @Column
+    private String desde;
+    @Column
+    private String para;
+    @Column
+    private String asunto;
+    @Column
+    private String contenido;
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getTo() {
-        return to;
+    public String getDesde() {
+        return desde;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public void setDesde(String desde) {
+        this.desde = desde;
     }
 
-    public String getSubject() {
-        return subject;
+    public String getPara() {
+        return para;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setPara(String para) {
+        this.para = para;
     }
 
-    public String getContent() {
-        return content;
+    public String getAsunto() {
+        return asunto;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
     }
 
+    public String getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

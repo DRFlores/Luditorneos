@@ -14,10 +14,10 @@ public class ServicioEmail {
 
     public void sendSimpleMessage(Mail mail){
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setSubject(mail.getSubject());
-        message.setText(mail.getContent());
-        message.setTo(mail.getTo());
-        message.setFrom(mail.getFrom());
+        message.setSubject(mail.getAsunto());
+        message.setText(mail.getContenido());
+        message.setTo(mail.getPara());
+        message.setFrom(mail.getDesde());
 
         emailSender.send(message);
     }

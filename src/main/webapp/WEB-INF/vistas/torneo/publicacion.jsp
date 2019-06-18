@@ -41,7 +41,8 @@
         <p>Los esperamos!</p>
         <br>
          <spring:url value="/send-mail" var="mailActionUrl" />
-         <form:form method="post" action="${mailActionUrl}">
+         <form:form method="post" action="${mailActionUrl}" modelAttribute="torneo">
+             <form:input cssStyle="display: none" value="${torneo.id}" path="id"/>
              <input type="submit" value="Apuntarme!!" class="btn btn-primary" />
          </form:form>
         <%@ page import="ar.edu.unlam.tallerweb1.modelo.Modalidad" %>
