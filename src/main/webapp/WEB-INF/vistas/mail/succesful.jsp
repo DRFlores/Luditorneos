@@ -17,7 +17,7 @@
     <link href="../css/bootstrap-theme.min.css" rel="stylesheet">
 </head>
 <body>
-    <a href="torneo" class="btn btn-info pull-right" role="button">Volver a Torneos</a>
+    <a href="torneo/${torneo}" class="btn btn-info pull-right" role="button">Volver a Torneos</a>
     <c:if test="${not empty error}">
         <h4 class="alert alert-danger"><span>${error}</span></h4>
         <br>

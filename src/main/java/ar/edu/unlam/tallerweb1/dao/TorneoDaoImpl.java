@@ -44,4 +44,10 @@ public class TorneoDaoImpl implements TorneoDao {
 				.list();
 	}
 
+    @Override
+    public void update(Torneo torneo) {
+		final Session session = sessionFactory.getCurrentSession();
+		session.update(torneo);
+	}
+
 }

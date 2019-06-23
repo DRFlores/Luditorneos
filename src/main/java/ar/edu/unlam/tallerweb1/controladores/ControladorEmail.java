@@ -6,7 +6,6 @@ import ar.edu.unlam.tallerweb1.modelo.Torneo;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEmail;
 import ar.edu.unlam.tallerweb1.servicios.ServicioTorneo;
-import ar.edu.unlam.tallerweb1.servicios.ServicioEmailImpl;
 
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -47,9 +46,12 @@ public class ControladorEmail {
                     + " a las " + t.getHorarioHHss() + "." );
             mail.setAsunto("Te anotaste exitosamente para jugar: " + t.getJuego().getDescripcion());
 
+            t.getUsuarios().add(userName);
+            servicioTorneo.update(t);
             servicioEmail.mandarMail(mail);
             servicioEmail.guardarEmail(mail);
 
+            model.put("torneo", t.getId());
             model.put("enviado", "El mail se mando exitosamente");
         } else {
             model.put("error", "El mail no se ha enviado o usted es organizador");
