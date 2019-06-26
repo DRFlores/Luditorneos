@@ -55,5 +55,21 @@ public class Usuario {
 	public void setNombre(String nick) {
 		this.nick = nick;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		int result = 17;
+		result = 31 * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Usuario)) {
+			return false;
+		}
+
+		Usuario usuario = (Usuario) obj;
+		return this.id == usuario.id;
+	}
 }

@@ -1,9 +1,14 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,12 +23,25 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioTorneo;
 public class ControladorTorneo {
 	@Inject
 	private ServicioTorneo servicioTorneo;
-	
+
 	@RequestMapping(path = "/torneo/{id}", method = RequestMethod.GET)
-	public ModelAndView verDetalleDeTorneo(@PathVariable("id") String id) {
+	public ModelAndView verDetalleDeTorneo(@PathVariable("id") String id, HttpServletRequest request) {
+
 		Torneo torneoBuscado = servicioTorneo.consultarTorneoPorId(Long.parseLong(id));
-		
+		Set<Usuario> usuarios = torneoBuscado.getUsuarios();
+		HttpSession session = request.getSession();
+		Usuario user = (Usuario) session.getAttribute("USER");
 		ModelMap model = new ModelMap();
+
+		if (usuarios != null) {
+			model.put("usuarios", usuarios);
+		}
+
+		if (usuarios.contains(user)) {
+			model.put("existeUsuario", true);
+		} else {
+			model.put("existeUsuario", false);
+		}
 
 		if (torneoBuscado != null) {
 			

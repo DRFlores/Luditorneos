@@ -40,11 +40,19 @@
 
         <p>Los esperamos!</p>
         <br>
-         <spring:url value="/send-mail" var="mailActionUrl" />
-         <form:form method="post" action="${mailActionUrl}" modelAttribute="torneo">
-             <form:input cssStyle="display: none" value="${torneo.id}" path="id"/>
-             <input type="submit" value="Apuntarme!!" class="btn btn-primary" />
-         </form:form>
+        <c:choose>
+            <c:when test="${existeUsuario == false}">
+                <spring:url value="/send-mail" var="mailActionUrl" />
+                <%--@elvariable id="torneo" type=""--%>
+                <form:form method="post" action="${mailActionUrl}" modelAttribute="torneo">
+                    <form:input cssStyle="display: none" value="${torneo.id}" path="id"/>
+                    <input type="submit" value="Apuntarme!!" class="btn btn-primary" />
+                </form:form>
+            </c:when>
+            <c:otherwise>
+                <p>Ya estas anotado!!</p>
+            </c:otherwise>
+        </c:choose>
         <%@ page import="ar.edu.unlam.tallerweb1.modelo.Modalidad" %>
         <c:if test="${torneo.modalidad != Modalidad.INDIVIDUAL}">
             <p><small>*Los premios se dividen entre los participantes ganadores</small></p>
@@ -52,6 +60,11 @@
                 es un total de 25 monedas para cada uno</small></p>
         </c:if>
 
+    </c:if>
+    <c:if test="${not empty usuarios}">
+        <c:forEach var="usuarios" items="${usuarios}">
+            <p>${usuarios.email}</p>
+        </c:forEach>
     </c:if>
 
 </div>

@@ -50,7 +50,6 @@ public class ControladorEmail {
             servicioTorneo.update(t);
             servicioEmail.mandarMail(mail);
             servicioEmail.guardarEmail(mail);
-
             model.put("torneo", t.getId());
             model.put("enviado", "El mail se mando exitosamente");
         } else {
