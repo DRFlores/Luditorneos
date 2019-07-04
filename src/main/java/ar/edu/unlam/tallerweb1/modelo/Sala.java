@@ -9,8 +9,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-
-
 @Entity
 public class Sala {
 	@Id

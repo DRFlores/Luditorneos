@@ -2,15 +2,9 @@ package ar.edu.unlam.tallerweb1.modelo;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.*;
 
 @Entity
 public class Torneo {
@@ -36,6 +30,13 @@ public class Torneo {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Usuario organizador;
+
+	@ManyToMany(fetch= FetchType.EAGER)
+    @JoinTable(name = "torneo_usuario",
+			joinColumns = @JoinColumn(name = "torneo_id"),
+			inverseJoinColumns = @JoinColumn(name = "usuario_id")
+	)
+	private Set<Usuario> usuarios = new HashSet<>();
 	
 	public Long getId() {
 		return id;
@@ -143,6 +144,12 @@ public class Torneo {
 	public Long getPremiosTotalesARepartir() {
 		return this.getPrimerPremio()+this.getSegundoPremio()+this.getTercerPremio();		
 	}
-	
 
+    public Set<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(Set<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
 }

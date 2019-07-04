@@ -11,5 +11,5 @@ public interface ServicioTorneo {
 	Torneo consultarTorneoPorId(Long id);
 	Sala consultarSala(Torneo torneo);
 	List<Torneo> consultarProximosTorneos();
-
+	void update(Torneo torneo);
 }

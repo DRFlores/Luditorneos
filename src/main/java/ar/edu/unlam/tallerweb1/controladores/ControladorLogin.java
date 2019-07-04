@@ -1,7 +1,7 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.*;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -39,16 +39,18 @@ public class ControladorLogin {
 	// Este metodo escucha la URL validar-login siempre y cuando se invoque con metodo http POST
 	// El método recibe un objeto Usuario el que tiene los datos ingresados en el form correspondiente y se corresponde con el modelAttribute definido en el
 	// tag form:form
-	@RequestMapping(path = "/validar-login", method = RequestMethod.POST) 
+	@RequestMapping(path = "/validar-login", method = RequestMethod.POST)
 	public ModelAndView validarLogin(@ModelAttribute("usuario") Usuario usuario, HttpServletRequest request) {
 		ModelMap model = new ModelMap();
-
 		// invoca el metodo consultarUsuario del servicio y hace un redirect a la URL /home, esto es, en lugar de enviar a una vista
 		// hace una llamada a otro action a través de la URL correspondiente a ésta
 		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
+
 		if (usuarioBuscado != null) {
-			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
-			return new ModelAndView("redirect:/home");
+			HttpSession session = request.getSession();
+			session.setAttribute("ROL", usuarioBuscado.getRol());
+			session.setAttribute("USER", usuarioBuscado);
+			return new ModelAndView("redirect:/torneo");
 		} else {
 			// si el usuario no existe agrega un mensaje de error en el modelo.
 			model.put("error", "Usuario o clave incorrecta");

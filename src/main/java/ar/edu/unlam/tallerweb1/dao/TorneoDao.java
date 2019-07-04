@@ -11,5 +11,6 @@ public interface TorneoDao {
 	Torneo consultarTorneoPorId(Long id);
 	Sala consultarSala(Torneo torneo);
 	List<Torneo> consultarProximosTorneos(Calendar fechayHora);
+	void update(Torneo torneo);
 
 }

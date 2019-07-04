@@ -34,11 +34,16 @@ public class ServicioTorneoImpl implements ServicioTorneo {
 	public List<Torneo> consultarProximosTorneos() {
 		/*
 		 * Descontamos 15 minutos a la fecha actual porque las inscripciones siguen abiertas
-		 * hasta 15 minutos después del inicio del torneo.
+		 * hasta 15 minutos despuï¿½s del inicio del torneo.
 		 * */
 		Calendar fechayHora = Calendar.getInstance();
 		fechayHora.add(Calendar.MINUTE, -15);		
 		return servicioTorneoDao.consultarProximosTorneos(fechayHora);
+	}
+
+    @Override
+    public void update(Torneo torneo) {
+		servicioTorneoDao.update(torneo);
 	}
 
 }

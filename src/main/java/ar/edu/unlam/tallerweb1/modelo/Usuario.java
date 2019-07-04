@@ -1,11 +1,7 @@
 package ar.edu.unlam.tallerweb1.modelo;
-
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.Set;
+import java.util.HashSet;
+import javax.persistence.*;
 
 // Clase que modela el concepto de Usuario, la anotacion @Entity le avisa a hibernate que esta clase es persistible
 // el paquete ar.edu.unlam.tallerweb1.modelo esta indicado en el archivo hibernateCOntext.xml para que hibernate
@@ -22,6 +18,7 @@ public class Usuario {
 	private String email;
 	private String nick;
 	private String password;
+
 	@Enumerated(EnumType.ORDINAL)
 	private Rol rol;
 	
@@ -58,5 +55,21 @@ public class Usuario {
 	public void setNombre(String nick) {
 		this.nick = nick;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		int result = 17;
+		result = 31 * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Usuario)) {
+			return false;
+		}
+
+		Usuario usuario = (Usuario) obj;
+		return this.id == usuario.id;
+	}
 }
